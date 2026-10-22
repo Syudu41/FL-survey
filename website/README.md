@@ -1,6 +1,6 @@
 # FL Fieldnotes — survey website
 
-A MkDocs website for a comprehensive federated learning survey. The homepage explains the project beside an interactive cylinder. Selecting a dimension magnifies that layer into a full-screen cylinder. Concept names sit on a 3D rotating ring around it; left/right arrows or keyboard arrows rotate between names, and selecting a name opens its detail page. The All dimensions button or Escape returns to the stack. An **Explore all** link also opens the full listing. That link opens a concept listing; every concept has its own detail page and URL.
+A MkDocs website for a comprehensive federated learning survey. Selecting a dimension magnifies its layer into a cylinder showing up to five clickable concept names. With more than five concepts, arrow controls move the visible window by one name. All dimensions or Escape returns to the stack. Explore all opens the generated full listing.
 
 Concept details are still placeholder text. The homepage and dimension descriptions explain the intended scope.
 
@@ -16,15 +16,29 @@ website/.venv/bin/mkdocs serve -f website/mkdocs.yml
 
 Open the URL printed by MkDocs, normally http://127.0.0.1:8000.
 
-## Edit Markdown content
+## Add concepts automatically
 
-- `docs/index.md`: the homepage introduction and cylinder dimensions. Each `## Dimension {#stable-id}` has a description and an `Explore all` Markdown link to its listing.
-- `docs/dimensions/<dimension>/index.md`: concept links with brief descriptions.
-- `docs/dimensions/<dimension>/<concept>.md`: the concept's detailed notes.
+Create a Markdown file under `docs/dimensions/<dimension>/`. You can also create a nested folder with a `README.md`. No navigation edits or front matter are required:
 
-Front matter selects the page layout: `home`, `dimension`, or `concept`. Concept front matter specifies `dimension` and `dimension_url` for breadcrumb navigation. MkDocs converts all Markdown links to HTML links. Concept pages work without JavaScript; only the cylinder needs JavaScript.
+```markdown
+# My new concept
 
-The build hook `hooks.py` reads the concept links from dimension listing Markdown and supplies the homepage panels, so names and destinations have one source. The template is `theme/main.html`. Styles and cylinder interactions are in `docs/assets/`. Fonts use Arial with Helvetica Neue and Helvetica fallbacks. The cylinder is drawn in CSS, with keyboard-accessible buttons and reduced-motion support.
+A brief description for the concept listing.
+
+## Details
+
+Write the explanation and cite the sources here.
+```
+
+On the next MkDocs rebuild, the document appears in both the cylinder and Explore all. GitHub Actions rebuilds when the change is pushed. Each page gets its dimension breadcrumb automatically.
+
+Optional YAML front matter supports `title`, `description`, and numeric `order`. The title otherwise comes from the first `# Heading` (or filename); the description comes from its first ordinary paragraph. Concepts sort by `order`, then title. `draft: true` keeps a concept out of the cylinder and listing. README documents are published at `readme-note.html` within their folder so they can coexist with an index page.
+
+- `docs/index.md` contains the homepage and dimension descriptions.
+- `docs/dimensions/<dimension>/index.md` contains the dimension introduction. Its concept listing is generated automatically; do not manually add concept links.
+- All other `.md` files in that dimension, including nested files, are discovered as concepts.
+
+`hooks.py` discovers documents and supplies both navigation views. `theme/main.html` controls the page structure. Styles and interactions are in `docs/assets/`. Fonts use Arial with Helvetica Neue and Helvetica fallbacks. The cylinder is drawn in CSS; keyboard arrows and reduced-motion preferences are supported.
 
 ## Publishing
 

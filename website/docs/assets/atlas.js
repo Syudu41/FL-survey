@@ -16,7 +16,7 @@ const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let panelAnimation;
 let zoomAnimation;
 let carouselIndex = 0;
-let carouselTurn = 0;
+const visibleLimit = 5;
 let conceptLinks = [];
 let lastSelected;
 const viewer = document.querySelector('#dimension-view');
@@ -60,30 +60,17 @@ function openConcepts(item, index) {
   document.querySelector('#concept-heading').textContent = item.title;
   conceptLinks = [...entries.children].map(link => link.cloneNode(true));
   carouselIndex = 0;
-  carouselTurn = 0;
-  rotor.style.transition = 'none';
-  rotor.style.transform = 'rotateY(0deg)';
   rotor.replaceChildren();
   conceptLinks.forEach((link, i) => {
     link.className = 'rotating-concept';
-    link.style.setProperty('--angle', `${i * 360 / conceptLinks.length}deg`);
+    link.title = link.textContent;
     rotor.append(link);
   });
-  for (let i = 0; i < 16; i++) {
-    const rib = document.createElement('span');
-    rib.className = 'rotor-rib';
-    rib.setAttribute('aria-hidden', 'true');
-    rib.style.setProperty('--angle', `${i * 22.5}deg`);
-    rotor.append(rib);
-  }
   viewer.showModal();
   document.body.classList.add('dimension-open');
   world.style.setProperty('--radius', `${world.clientWidth / 2}px`);
   [...cylinder.children].forEach((button, i) => button.setAttribute('aria-expanded', String(i === index)));
   updateConcept();
-  // Read layout before restoring transitions so each new dimension starts at zero.
-  rotor.getBoundingClientRect();
-  rotor.style.transition = '';
   if (!reducedMotion.matches) {
     zoomAnimation?.cancel();
     const target = document.querySelector('.drum-shell').getBoundingClientRect();
@@ -96,24 +83,61 @@ function openConcepts(item, index) {
     rotor.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 500, fill: 'backwards' });
   }
 }
-function updateConcept() {
+function updateConcept(direction = 0) {
+  const count = Math.min(visibleLimit, conceptLinks.length);
+  const rowHeight = innerWidth <= 760 ? 58 : 68;
   conceptLinks.forEach((link, i) => {
-    const current = i === carouselIndex;
-    link.classList.toggle('current', current);
-    link.tabIndex = current ? 0 : -1;
-    link.setAttribute('aria-hidden', String(!current));
-    if (current) link.setAttribute('aria-current', 'true');
-    else link.removeAttribute('aria-current');
+    link.getAnimations().forEach(animation => animation.cancel());
+    const previousSlot = link.dataset.slot === undefined ? null : Number(link.dataset.slot);
+    const slot = i - carouselIndex;
+    const visible = slot >= 0 && slot < count;
+    link.hidden = !visible;
+    link.classList.toggle('visible', visible);
+    link.tabIndex = visible ? 0 : -1;
+    link.setAttribute('aria-hidden', String(!visible));
+    if (!visible) {
+      delete link.dataset.slot;
+      return;
+    }
+    const offset = slot - (count - 1) / 2;
+    const y = offset * rowHeight;
+    const x = -Math.pow(offset, 2) * 5;
+    const scale = 1 - Math.abs(offset) * .035;
+    const target = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
+    link.style.transform = target;
+    link.dataset.slot = slot;
+    if (direction && !reducedMotion.matches) {
+      const start = previousSlot === null
+        ? `translate(-50%, -50%) translate(${direction * 130}px, ${y + direction * rowHeight}px) rotateY(${direction * 65}deg) scale(.8)`
+        : `translate(-50%, -50%) translate(${x}px, ${y + direction * rowHeight}px) scale(${scale})`;
+      link.animate([
+        { transform: start, opacity: previousSlot === null ? 0 : 1 },
+        { transform: target, opacity: 1 }
+      ], { duration: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
+    }
   });
-  document.querySelector('#rotation-position').textContent = `${String(carouselIndex + 1).padStart(2, '0')} / ${String(conceptLinks.length).padStart(2, '0')}`;
-  document.querySelectorAll('.rotation-controls button').forEach(button => button.disabled = conceptLinks.length < 2);
+  document.querySelector('#rotation-position').textContent = conceptLinks.length
+    ? `${carouselIndex + 1}–${carouselIndex + count} of ${conceptLinks.length}`
+    : 'No concepts yet';
+  document.querySelector('#rotate-previous').disabled = carouselIndex === 0;
+  document.querySelector('#rotate-next').disabled = carouselIndex + count >= conceptLinks.length;
+  if (direction && !reducedMotion.matches) {
+    rotor.getAnimations().forEach(animation => animation.cancel());
+    rotor.animate([
+      { transform: `rotateY(${direction * -12}deg)` },
+      { transform: 'rotateY(0deg)' }
+    ], { duration: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
+    document.querySelector('.drum-shell').animate([
+      { backgroundPosition: `${direction * 50}px 0, 0 0, 0 0` },
+      { backgroundPosition: '0 0, 0 0, 0 0' }
+    ], { duration: 600, easing: 'ease-out' });
+  }
 }
 function rotateConcept(direction) {
-  if (conceptLinks.length < 2) return;
-  carouselTurn += direction;
-  carouselIndex = ((carouselTurn % conceptLinks.length) + conceptLinks.length) % conceptLinks.length;
-  rotor.style.transform = `rotateY(${-carouselTurn * 360 / conceptLinks.length}deg)`;
-  updateConcept();
+  const next = Math.max(0, Math.min(carouselIndex + direction, conceptLinks.length - visibleLimit));
+  if (next === carouselIndex) return;
+  carouselIndex = next;
+  updateConcept(direction);
 }
 document.querySelector('#close-concepts').addEventListener('click', () => viewer.close());
 viewer.addEventListener('close', () => {
@@ -131,7 +155,10 @@ viewer.addEventListener('keydown', event => {
   }
 });
 new ResizeObserver(() => {
-  if (viewer.open) world.style.setProperty('--radius', `${world.clientWidth / 2}px`);
+  if (viewer.open) {
+    world.style.setProperty('--radius', `${world.clientWidth / 2}px`);
+    updateConcept();
+  }
 }).observe(world);
 const selected = dimensions.findIndex(item => `#${item.id}` === location.hash);
 selectDimension(selected < 0 ? 0 : selected, false);

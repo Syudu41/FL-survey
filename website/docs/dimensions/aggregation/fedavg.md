@@ -1,5 +1,6 @@
 ---
 layout: concept
+order: 10
 dimension: Aggregation
 dimension_url: dimensions/aggregation/index.html
 ---

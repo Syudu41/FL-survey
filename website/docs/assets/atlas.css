@@ -29,3 +29,17 @@ body.dimension-open{overflow:hidden}
 #rotation-position{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:56px;text-align:center}
 .rotation-hint{font-size:12px;color:var(--muted);margin:25px 0 0}
 @media(max-width:760px){.dimension-toolbar{height:76px;gap:10px}.dimension-toolbar>span{display:none}.dimension-toolbar h2{font-size:16px}.dimension-toolbar button{font-size:12px}.dimension-content{min-height:calc(100dvh - 76px);padding:35px 15px 55px}.drum-perspective{width:82vw;height:270px;perspective:1000px}.drum-shell{inset:40px 0}.drum-shell:before,.drum-shell:after{height:48px}.rotating-concept{font-size:24px;letter-spacing:-.4px}.rotation-controls{margin-top:10px}.masthead .brand{font-size:18px}}
+/* A brushed-metal barrel with a five-name window across its curved face. */
+.dimension-content{background:radial-gradient(ellipse at 50% 44%,#e0e7f099,transparent 60%);padding:35px 20px 45px}
+.drum-perspective{width:min(720px,82vw);height:520px;perspective:1400px}
+.drum-world{filter:drop-shadow(0 30px 25px #23345314)}
+.drum-shell{inset:42px 0;border-color:#a4b1c3;border-radius:50% / 12%;background:repeating-linear-gradient(90deg,transparent 0px,transparent 43px,#5369840b 44px,transparent 45px),linear-gradient(0deg,#52698422,transparent 28%,#ffffff44 70%,transparent),linear-gradient(90deg,#8293aa 0%,#c9d3e0 12%,#edf1f6 37%,#dce4ef 60%,#b9c8dc 83%,#758ba9 100%);box-shadow:inset 6px 0 15px #ffffff50,inset -10px 0 15px #41567424,0 42px 35px -30px #20375b66}
+.drum-shell:before{height:82px;top:-2px;border-color:#a4b1c3;background:radial-gradient(ellipse at 45% 40%,#f8fafc,#d6e0ed 60%,#95a9c3);box-shadow:inset 0 0 0 5px #e4eaf2,inset 0 0 0 7px #a6b7cd88,inset 0 -8px 10px #5f789c22,0 4px 5px #ffffff88}
+.drum-shell:after{height:82px;bottom:-2px;border-color:transparent #849ab6 #849ab6;background:linear-gradient(0deg,#7d95b642,transparent 45%);box-shadow:inset 0 -5px 0 #c5d0df,inset 0 -7px 0 #7e95b466}
+.concept-rotor{transition:none}
+.rotating-concept{top:52%;left:50%;width:66%;padding:13px 26px;border:1px solid #ffffff88;border-radius:7px;background:linear-gradient(100deg,#ffffff12,#ffffffaa 45%,#ffffff22);box-shadow:0 1px 2px #273b5210,inset 0 1px 0 #ffffffcc;color:#263c59;text-align:left;text-shadow:0 1px 0 #ffffffaa;font-size:20px;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.5;transform:none;backface-visibility:visible;pointer-events:auto}
+.rotating-concept[hidden]{display:none}
+.rotating-concept:before{content:'';display:inline-block;width:5px;height:5px;margin:0 16px 4px 0;border-radius:50%;background:#5076ad;box-shadow:0 0 0 4px #5076ad12}
+.rotating-concept:hover{background:#f5f8fddd;border-color:#7190b9;text-decoration:none;box-shadow:0 5px 18px #30496918}
+.rotation-controls{margin-top:0;gap:25px}.rotation-controls button{background:#ffffff77;box-shadow:0 2px 5px #1b325407}#rotation-position{min-width:110px;font-size:12px;letter-spacing:.5px}
+@media(max-width:760px){.dimension-content{padding:24px 12px 35px}.drum-perspective{width:86vw;height:440px}.drum-shell{inset:32px 0}.drum-shell:before,.drum-shell:after{height:58px}.drum-shell:before{box-shadow:inset 0 0 0 3px #e4eaf2,inset 0 0 0 5px #a6b7cd88}.rotating-concept{width:82%;padding:11px 12px;font-size:14px}.rotating-concept:before{margin-right:10px;width:4px;height:4px;margin-bottom:3px}.rotation-hint{font-size:11px}.rotation-controls button{width:46px;height:46px}}
