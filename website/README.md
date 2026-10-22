@@ -1,6 +1,6 @@
 # FL Fieldnotes — survey website
 
-A MkDocs website for a comprehensive federated learning survey. The homepage explains the project beside an interactive cylinder. Selecting a dimension shows its description and swings out a panel of concept names linking directly to detail pages. An **Explore all** link also opens the full listing. That link opens a concept listing; every concept has its own detail page and URL.
+A MkDocs website for a comprehensive federated learning survey. The homepage explains the project beside an interactive cylinder. Selecting a dimension magnifies that layer into a full-screen cylinder. Concept names sit on a 3D rotating ring around it; left/right arrows or keyboard arrows rotate between names, and selecting a name opens its detail page. The All dimensions button or Escape returns to the stack. An **Explore all** link also opens the full listing. That link opens a concept listing; every concept has its own detail page and URL.
 
 Concept details are still placeholder text. The homepage and dimension descriptions explain the intended scope.
 
