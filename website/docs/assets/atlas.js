@@ -111,9 +111,6 @@ function updateConcept() {
     link.setAttribute('aria-hidden', String(!visible));
   });
   rotor.style.transform = `translateZ(calc(-1 * var(--radius))) rotateY(${-carouselTurn * 30}deg)`;
-  document.querySelector('#rotation-position').textContent = total
-    ? `${Math.min(visibleLimit, total)} visible · ${total} concepts`
-    : 'No concepts yet';
   document.querySelectorAll('.rotation-controls button').forEach(button => button.disabled = total <= visibleLimit);
 }
 function rotateConcept(direction) {
