@@ -27,6 +27,8 @@ const cylinder = document.querySelector('#cylinder');
 for (const [index, item] of dimensions.entries()) {
   const button = document.createElement('button');
   button.className = 'layer';
+  button.style.setProperty('--layer-index', index);
+  button.style.setProperty('--layer-count', dimensions.length);
   button.innerHTML = `<span class="layer-number">${String(index + 1).padStart(2, '0')}</span><span class="layer-name"></span><span class="layer-arrow" aria-hidden="true">↗</span>`;
   button.querySelector('.layer-name').textContent = item.title;
   button.setAttribute('aria-controls', 'dimension-view');

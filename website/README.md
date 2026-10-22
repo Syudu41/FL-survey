@@ -53,3 +53,5 @@ website/.venv/bin/mkdocs build --strict -f website/mkdocs.yml
 The generated website is in `website/site/`, which is ignored by Git. The repository-root `index.html` redirects to this folder for local use after building. GitHub Pages publishes the built output directly, so the public homepage opens without this local redirect.
 
 Motion reference: [David DeSandro’s horizontal 3D carousel](https://3dtransforms.desandro.com/carousel). Concept names replace image panels.
+
+Homepage visual reference: [Database Loading by Reijo](https://dribbble.com/shots/26897580-Database-Loading). Its glass edges and internal lighting are adapted to the dimension cylinder; the original artwork is not embedded.
