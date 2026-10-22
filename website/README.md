@@ -1,6 +1,6 @@
 # FL Fieldnotes — survey website
 
-A MkDocs website for a comprehensive federated learning survey. Selecting a dimension magnifies its layer into a cylinder showing up to five clickable concept names. With more than five concepts, arrow controls move the visible window by one name. All dimensions or Escape returns to the stack. Explore all opens the generated full listing.
+A MkDocs website for a comprehensive federated learning survey. Selecting a dimension magnifies its layer into a cylinder showing up to five clickable concept names. With more than five concepts, arrow controls rotate the horizontal 3D ring by one face, looping through all names. A wireframe border outlines the cylinder. All dimensions or Escape returns to the stack. Explore all opens the generated full listing.
 
 Concept details are still placeholder text. The homepage and dimension descriptions explain the intended scope.
 
@@ -51,3 +51,5 @@ website/.venv/bin/mkdocs build --strict -f website/mkdocs.yml
 ```
 
 The generated website is in `website/site/`, which is ignored by Git. The repository-root `index.html` redirects to this folder for local use after building. GitHub Pages publishes the built output directly, so the public homepage opens without this local redirect.
+
+Motion reference: [David DeSandro’s horizontal 3D carousel](https://3dtransforms.desandro.com/carousel). Concept names replace image panels.

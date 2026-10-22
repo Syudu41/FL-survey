@@ -3,43 +3,23 @@
 @media(max-width:1350px){footer{margin:0 6%}.home{gap:6%}.layer{height:78px}}
 @media(max-width:760px){.masthead{height:76px}.edition{display:none}.home{grid-template-columns:1fr;padding:36px 6%;gap:30px}.home-copy{display:contents}.home-copy>.eyebrow{order:0}.intro{order:1}.intro h1{font-size:36px;margin-top:0}.intro p{font-size:14px}.object-area{order:2;height:470px;margin-top:5px}.feature-panel{order:3;max-width:none;margin-top:0;min-height:0}.cylinder{width:290px}.layer{height:65px;padding-left:23px;padding-right:23px}.layer:before{height:30px}.layer-name{font-size:12px}.object-base{width:250px;bottom:55px}.object-heading{padding-bottom:12px}.object-caption{font-size:10px}.document-page{padding:28px 6% 50px}.document-page article h1{font-size:34px}.document-page article{font-size:15px}.breadcrumbs{margin-bottom:32px}footer{margin:15px 6% 0;padding:22px 0;gap:8px}.brand{font-size:11px;gap:8px}.home-link{font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-/* A selected layer expands into a full-screen cylinder with rotating labels. */
+/* Horizontal 3D ring carousel, with a wireframe cylinder enclosure. */
 .masthead .brand{font-size:19px;font-weight:500;letter-spacing:-.3px}
-#dimension-view{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:var(--bg);color:var(--ink);overflow:auto}
-#dimension-view::backdrop{background:var(--bg)}
-body.dimension-open{overflow:hidden}
+#dimension-view{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:var(--bg);color:var(--ink);overflow-x:hidden;overflow-y:auto}
+#dimension-view::backdrop{background:var(--bg)}body.dimension-open{overflow:hidden}
 .dimension-toolbar{height:96px;margin:0 6%;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid var(--line)}
-.dimension-toolbar button{padding:10px 0;border:0;background:transparent;color:var(--ink);font-size:13px}
-.dimension-toolbar h2{font-size:18px;font-weight:500;margin:0}
-.dimension-toolbar>span{font-size:12px;color:var(--muted)}
-.dimension-content{min-height:calc(100dvh - 96px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px 75px}
-.drum-perspective{perspective:1400px;width:min(640px,76vw);height:360px}
-.drum-world{position:relative;width:100%;height:100%;transform-style:preserve-3d;--radius:280px}
-.drum-shell{position:absolute;inset:50px 0;background:linear-gradient(90deg,#496b9c,#91acd3 24%,#b9cae4 49%,#8da9d0 75%,#456795);border:1px solid #6f8db7;border-radius:50% / 14%;box-shadow:0 40px 50px -35px #263c6380,inset 0 -25px 35px #30527e22}
-.drum-shell:before,.drum-shell:after{content:'';position:absolute;left:-1px;right:-1px;height:70px;border:1px solid #6f8db7;border-radius:50%}
-.drum-shell:before{top:-1px;background:linear-gradient(140deg,#cfdbec,#8da9cf);z-index:1}
-.drum-shell:after{bottom:-1px;border-top-color:transparent;box-shadow:inset 0 -12px 20px #456b9520}
-.concept-rotor{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.22,.75,.2,1)}
-.rotating-concept{position:absolute;left:50%;top:52%;width:80%;text-align:center;transform:translate(-50%,-50%) rotateY(var(--angle)) translateZ(var(--radius));backface-visibility:hidden;text-decoration:none;font-size:clamp(22px,3.2vw,42px);font-weight:500;letter-spacing:-.8px;line-height:1.25;color:#1b3254;text-shadow:0 1px 0 #ffffff66;pointer-events:none}
-.rotating-concept.current{pointer-events:auto}.rotating-concept:hover{text-decoration:underline;text-underline-offset:8px}
-.rotor-rib{position:absolute;left:50%;top:32%;width:1px;height:43%;background:#36557f18;transform:rotateY(var(--angle)) translateZ(var(--radius));backface-visibility:hidden;pointer-events:none}
-.rotation-controls{display:flex;align-items:center;gap:35px;margin-top:20px}
-.rotation-controls button{width:52px;height:52px;border-radius:50%;border:1px solid #bfc8d5;background:transparent;color:var(--ink);font-size:23px;transition:background .2s}
-.rotation-controls button:hover{background:#e4e9f0}.rotation-controls button:disabled{opacity:.3;cursor:default}
-#rotation-position{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:56px;text-align:center}
-.rotation-hint{font-size:12px;color:var(--muted);margin:25px 0 0}
-@media(max-width:760px){.dimension-toolbar{height:76px;gap:10px}.dimension-toolbar>span{display:none}.dimension-toolbar h2{font-size:16px}.dimension-toolbar button{font-size:12px}.dimension-content{min-height:calc(100dvh - 76px);padding:35px 15px 55px}.drum-perspective{width:82vw;height:270px;perspective:1000px}.drum-shell{inset:40px 0}.drum-shell:before,.drum-shell:after{height:48px}.rotating-concept{font-size:24px;letter-spacing:-.4px}.rotation-controls{margin-top:10px}.masthead .brand{font-size:18px}}
-/* A brushed-metal barrel with a five-name window across its curved face. */
-.dimension-content{background:radial-gradient(ellipse at 50% 44%,#e0e7f099,transparent 60%);padding:35px 20px 45px}
-.drum-perspective{width:min(720px,82vw);height:520px;perspective:1400px}
-.drum-world{filter:drop-shadow(0 30px 25px #23345314)}
-.drum-shell{inset:42px 0;border-color:#a4b1c3;border-radius:50% / 12%;background:repeating-linear-gradient(90deg,transparent 0px,transparent 43px,#5369840b 44px,transparent 45px),linear-gradient(0deg,#52698422,transparent 28%,#ffffff44 70%,transparent),linear-gradient(90deg,#8293aa 0%,#c9d3e0 12%,#edf1f6 37%,#dce4ef 60%,#b9c8dc 83%,#758ba9 100%);box-shadow:inset 6px 0 15px #ffffff50,inset -10px 0 15px #41567424,0 42px 35px -30px #20375b66}
-.drum-shell:before{height:82px;top:-2px;border-color:#a4b1c3;background:radial-gradient(ellipse at 45% 40%,#f8fafc,#d6e0ed 60%,#95a9c3);box-shadow:inset 0 0 0 5px #e4eaf2,inset 0 0 0 7px #a6b7cd88,inset 0 -8px 10px #5f789c22,0 4px 5px #ffffff88}
-.drum-shell:after{height:82px;bottom:-2px;border-color:transparent #849ab6 #849ab6;background:linear-gradient(0deg,#7d95b642,transparent 45%);box-shadow:inset 0 -5px 0 #c5d0df,inset 0 -7px 0 #7e95b466}
-.concept-rotor{transition:none}
-.rotating-concept{top:52%;left:50%;width:66%;padding:13px 26px;border:1px solid #ffffff88;border-radius:7px;background:linear-gradient(100deg,#ffffff12,#ffffffaa 45%,#ffffff22);box-shadow:0 1px 2px #273b5210,inset 0 1px 0 #ffffffcc;color:#263c59;text-align:left;text-shadow:0 1px 0 #ffffffaa;font-size:20px;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.5;transform:none;backface-visibility:visible;pointer-events:auto}
-.rotating-concept[hidden]{display:none}
-.rotating-concept:before{content:'';display:inline-block;width:5px;height:5px;margin:0 16px 4px 0;border-radius:50%;background:#5076ad;box-shadow:0 0 0 4px #5076ad12}
-.rotating-concept:hover{background:#f5f8fddd;border-color:#7190b9;text-decoration:none;box-shadow:0 5px 18px #30496918}
-.rotation-controls{margin-top:0;gap:25px}.rotation-controls button{background:#ffffff77;box-shadow:0 2px 5px #1b325407}#rotation-position{min-width:110px;font-size:12px;letter-spacing:.5px}
-@media(max-width:760px){.dimension-content{padding:24px 12px 35px}.drum-perspective{width:86vw;height:440px}.drum-shell{inset:32px 0}.drum-shell:before,.drum-shell:after{height:58px}.drum-shell:before{box-shadow:inset 0 0 0 3px #e4eaf2,inset 0 0 0 5px #a6b7cd88}.rotating-concept{width:82%;padding:11px 12px;font-size:14px}.rotating-concept:before{margin-right:10px;width:4px;height:4px;margin-bottom:3px}.rotation-hint{font-size:11px}.rotation-controls button{width:46px;height:46px}}
+.dimension-toolbar button{padding:10px 0;border:0;background:transparent;color:var(--ink);font-size:13px}.dimension-toolbar h2{font-size:18px;font-weight:500;margin:0}.dimension-toolbar>span{font-size:12px;color:var(--muted)}
+.dimension-content{min-height:calc(100dvh - 96px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 10px;background:radial-gradient(ellipse at 50% 45%,#e5eaf280,transparent 60%)}
+.drum-perspective{perspective:1400px;width:min(1080px,92vw);height:410px}
+.drum-world{position:relative;width:100%;height:100%;transform-style:preserve-3d;transform:rotateX(-12deg);--radius:350px;--diameter:700px;--cell-width:170px;--cell-height:180px}
+.drum-shell{position:absolute;inset:0;transform:translateZ(calc(-1 * var(--radius)));transform-style:preserve-3d;pointer-events:none}
+.cylinder-rim{position:absolute;left:50%;top:50%;width:var(--diameter);height:var(--diameter);border:4px solid #526e94;border-radius:50%;transform:translate(-50%,-50%) translateY(var(--rim-y)) rotateX(90deg);box-shadow:0 0 0 5px #a5b6cd15}
+.rim-top{--rim-y:-112px}.rim-bottom{--rim-y:112px}
+.cylinder-edge{position:absolute;left:calc(50% + var(--edge-x));top:calc(50% - 112px);height:224px;border-left:2px solid #7289a7}
+.edge-left{--edge-x:calc(-1 * var(--radius))}.edge-right{--edge-x:var(--radius)}
+.concept-rotor{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 850ms cubic-bezier(.22,.75,.2,1)}
+.rotating-concept{position:absolute;left:50%;top:50%;display:flex;align-items:center;justify-content:center;width:var(--cell-width);height:var(--cell-height);padding:15px 10px;border:1px solid #7f99bd;border-radius:5px;background:linear-gradient(145deg,#f7faffee,#d8e2f0ee);box-shadow:inset 0 1px 0 white,0 6px 15px #3049690c;color:#294468;text-align:center;text-decoration:none;font-size:17px;line-height:1.4;overflow:hidden;overflow-wrap:anywhere;transform:translate(-50%,-50%) rotateY(var(--angle)) translateZ(var(--radius));backface-visibility:hidden;opacity:0;pointer-events:none;transition:opacity .4s,border-color .2s,background .2s}
+.rotating-concept.visible{opacity:1;pointer-events:auto}.rotating-concept.front{background:linear-gradient(145deg,#e2edff,#bcd0ed);border-color:#456da6;box-shadow:inset 0 1px 0 white,0 10px 30px #345b9120}
+.rotating-concept.visible:hover{background:#c7dbf6;border-color:#345bb3;text-decoration:underline;text-underline-offset:4px}
+.rotation-controls{display:flex;align-items:center;gap:25px;margin-top:10px}.rotation-controls button{width:50px;height:50px;border:1px solid #bdc9d9;border-radius:50%;background:#ffffff88;color:var(--ink);font-size:23px;cursor:pointer}.rotation-controls button:hover{background:#e3eaf4}.rotation-controls button:disabled{opacity:.3;cursor:default}#rotation-position{font-size:12px;color:var(--muted);min-width:150px;text-align:center;font-variant-numeric:tabular-nums}.rotation-hint{font-size:12px;color:var(--muted);margin:25px 0 0}
+@media(max-width:760px){.dimension-toolbar{height:76px;gap:10px}.dimension-toolbar>span{display:none}.dimension-toolbar h2{font-size:16px}.dimension-toolbar button{font-size:12px}.dimension-content{min-height:calc(100dvh - 76px);padding:30px 4px 50px}.drum-perspective{width:98vw;height:300px;perspective:800px}.drum-world{--cell-height:140px}.rotating-concept{font-size:11px;padding:8px 3px;line-height:1.35}.rim-top{--rim-y:-88px}.rim-bottom{--rim-y:88px}.cylinder-edge{top:calc(50% - 88px);height:176px}.cylinder-rim{border-width:4px}.cylinder-edge{border-width:1px}.rotation-controls{gap:15px}.rotation-controls button{width:44px;height:44px}.rotation-hint{font-size:11px}.masthead .brand{font-size:18px}}

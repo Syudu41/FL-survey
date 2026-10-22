@@ -16,6 +16,7 @@ const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let panelAnimation;
 let zoomAnimation;
 let carouselIndex = 0;
+let carouselTurn = 0;
 const visibleLimit = 5;
 let conceptLinks = [];
 let lastSelected;
@@ -59,7 +60,9 @@ function openConcepts(item, index) {
   const entries = document.querySelector(`#concept-source [data-dimension="${item.id}"]`);
   document.querySelector('#concept-heading').textContent = item.title;
   conceptLinks = [...entries.children].map(link => link.cloneNode(true));
-  carouselIndex = 0;
+  carouselIndex = conceptLinks.length > visibleLimit ? 2 : 0;
+  carouselTurn = 0;
+  rotor.style.transition = 'none';
   rotor.replaceChildren();
   conceptLinks.forEach((link, i) => {
     link.className = 'rotating-concept';
@@ -68,76 +71,56 @@ function openConcepts(item, index) {
   });
   viewer.showModal();
   document.body.classList.add('dimension-open');
-  world.style.setProperty('--radius', `${world.clientWidth / 2}px`);
+  sizeCarousel();
   [...cylinder.children].forEach((button, i) => button.setAttribute('aria-expanded', String(i === index)));
   updateConcept();
+  rotor.getBoundingClientRect();
+  rotor.style.transition = '';
   if (!reducedMotion.matches) {
     zoomAnimation?.cancel();
-    const target = document.querySelector('.drum-shell').getBoundingClientRect();
+    const target = world.getBoundingClientRect();
     const x = origin.left + origin.width / 2 - target.left - target.width / 2;
     const y = origin.top + origin.height / 2 - target.top - target.height / 2;
     zoomAnimation = world.animate([
       { transform: `translate(${x}px, ${y}px) scale(${origin.width / target.width}, ${origin.height / target.height}) rotate(-8deg)` },
-      { transform: 'translate(0, 0) scale(1) rotate(0)' }
+      { transform: 'rotateX(-12deg)' }
     ], { duration: 850, easing: 'cubic-bezier(.16,1,.3,1)' });
     rotor.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 500, fill: 'backwards' });
   }
 }
-function updateConcept(direction = 0) {
-  const count = Math.min(visibleLimit, conceptLinks.length);
-  const rowHeight = innerWidth <= 760 ? 58 : 68;
+function sizeCarousel() {
+  const radius = Math.round(world.clientWidth * .36);
+  world.style.setProperty('--radius', `${radius}px`);
+  world.style.setProperty('--diameter', `${radius * 2}px`);
+  world.style.setProperty('--cell-width', `${Math.round(2 * radius * Math.tan(Math.PI / 12) * .91)}px`);
+}
+function updateConcept() {
+  const total = conceptLinks.length;
   conceptLinks.forEach((link, i) => {
-    link.getAnimations().forEach(animation => animation.cancel());
-    const previousSlot = link.dataset.slot === undefined ? null : Number(link.dataset.slot);
-    const slot = i - carouselIndex;
-    const visible = slot >= 0 && slot < count;
-    link.hidden = !visible;
+    // Keep five adjacent faces at the front of a twelve-sided cylinder.
+    // Hidden faces recycle behind it as the ring turns, without moving rows.
+    const offset = total <= visibleLimit
+      ? i - (total - 1) / 2
+      : ((i - carouselIndex + total + Math.floor(total / 2)) % total) - Math.floor(total / 2);
+    const visible = total <= visibleLimit || Math.abs(offset) <= 2;
+    link.hidden = false;
     link.classList.toggle('visible', visible);
+    link.classList.toggle('front', Math.abs(offset) < .6);
+    link.style.setProperty('--angle', `${(carouselTurn + offset) * 30}deg`);
     link.tabIndex = visible ? 0 : -1;
     link.setAttribute('aria-hidden', String(!visible));
-    if (!visible) {
-      delete link.dataset.slot;
-      return;
-    }
-    const offset = slot - (count - 1) / 2;
-    const y = offset * rowHeight;
-    const x = -Math.pow(offset, 2) * 5;
-    const scale = 1 - Math.abs(offset) * .035;
-    const target = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
-    link.style.transform = target;
-    link.dataset.slot = slot;
-    if (direction && !reducedMotion.matches) {
-      const start = previousSlot === null
-        ? `translate(-50%, -50%) translate(${direction * 130}px, ${y + direction * rowHeight}px) rotateY(${direction * 65}deg) scale(.8)`
-        : `translate(-50%, -50%) translate(${x}px, ${y + direction * rowHeight}px) scale(${scale})`;
-      link.animate([
-        { transform: start, opacity: previousSlot === null ? 0 : 1 },
-        { transform: target, opacity: 1 }
-      ], { duration: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
-    }
   });
-  document.querySelector('#rotation-position').textContent = conceptLinks.length
-    ? `${carouselIndex + 1}–${carouselIndex + count} of ${conceptLinks.length}`
+  rotor.style.transform = `translateZ(calc(-1 * var(--radius))) rotateY(${-carouselTurn * 30}deg)`;
+  document.querySelector('#rotation-position').textContent = total
+    ? `${Math.min(visibleLimit, total)} visible · ${total} concepts`
     : 'No concepts yet';
-  document.querySelector('#rotate-previous').disabled = carouselIndex === 0;
-  document.querySelector('#rotate-next').disabled = carouselIndex + count >= conceptLinks.length;
-  if (direction && !reducedMotion.matches) {
-    rotor.getAnimations().forEach(animation => animation.cancel());
-    rotor.animate([
-      { transform: `rotateY(${direction * -12}deg)` },
-      { transform: 'rotateY(0deg)' }
-    ], { duration: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
-    document.querySelector('.drum-shell').animate([
-      { backgroundPosition: `${direction * 50}px 0, 0 0, 0 0` },
-      { backgroundPosition: '0 0, 0 0, 0 0' }
-    ], { duration: 600, easing: 'ease-out' });
-  }
+  document.querySelectorAll('.rotation-controls button').forEach(button => button.disabled = total <= visibleLimit);
 }
 function rotateConcept(direction) {
-  const next = Math.max(0, Math.min(carouselIndex + direction, conceptLinks.length - visibleLimit));
-  if (next === carouselIndex) return;
-  carouselIndex = next;
-  updateConcept(direction);
+  if (conceptLinks.length <= visibleLimit) return;
+  carouselTurn += direction;
+  carouselIndex = (carouselIndex + direction + conceptLinks.length) % conceptLinks.length;
+  updateConcept();
 }
 document.querySelector('#close-concepts').addEventListener('click', () => viewer.close());
 viewer.addEventListener('close', () => {
@@ -156,7 +139,7 @@ viewer.addEventListener('keydown', event => {
 });
 new ResizeObserver(() => {
   if (viewer.open) {
-    world.style.setProperty('--radius', `${world.clientWidth / 2}px`);
+    sizeCarousel();
     updateConcept();
   }
 }).observe(world);
