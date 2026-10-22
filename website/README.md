@@ -1,8 +1,10 @@
-# FL Fieldnotes — visual prototype
+# FL Fieldnotes — survey website
 
-A local MkDocs prototype for the comprehensive FL survey website. Select one of five cylinder layers, open a concept, then move through its reading sections. The text is deliberately placeholder content, not a completed survey.
+A MkDocs website for a comprehensive federated learning survey. The homepage explains the project beside an interactive cylinder. Selecting a dimension shows its description and an **Explore all** link. That link opens a concept listing; every concept has its own detail page and URL.
 
-## Run
+Concept details are still placeholder text. The homepage and dimension descriptions explain the intended scope.
+
+## Run locally
 
 From the repository root:
 
@@ -12,34 +14,26 @@ website/.venv/bin/pip install -r website/requirements.txt
 website/.venv/bin/mkdocs serve -f website/mkdocs.yml
 ```
 
-Open the URL printed by MkDocs (normally http://127.0.0.1:8000).
+Open the URL printed by MkDocs, normally http://127.0.0.1:8000.
 
-## Edit the content
+## Edit Markdown content
 
-Edit [docs/index.md](docs/index.md). MkDocs converts Markdown to HTML; the custom theme turns that rendered content into the interactive atlas. Concept text is not embedded in the template or JavaScript.
+- `docs/index.md`: the homepage introduction and cylinder dimensions. Each `## Dimension {#stable-id}` has a description and an `Explore all` Markdown link to its listing.
+- `docs/dimensions/<dimension>/index.md`: concept links with brief descriptions.
+- `docs/dimensions/<dimension>/<concept>.md`: the concept's detailed notes.
 
-- `## Dimension {#stable-id}` creates a cylinder layer.
-- `### Concept {#stable-id}` creates an item in that layer's concept panel.
-- `#### Section title` creates a reading step. Each concept needs at least one section.
-- Paragraphs immediately after a dimension or concept heading provide its description.
-- Normal Markdown supports paragraphs, lists, links, tables, and blockquotes inside steps.
+Front matter selects the page layout: `home`, `dimension`, or `concept`. Concept front matter specifies `dimension` and `dimension_url` for breadcrumb navigation. MkDocs converts all Markdown links to HTML links. Concept pages work without JavaScript; only the cylinder needs JavaScript.
 
-For this short prototype all content lives in one Markdown file. As the survey grows, separate concept pages can replace this initial structure.
+The template is `theme/main.html`. Styles and cylinder interactions are in `docs/assets/`. Fonts use Arial with Helvetica Neue and Helvetica fallbacks. The cylinder is drawn in CSS, with keyboard-accessible buttons and reduced-motion support.
 
-## Build for GitHub Pages
+## Publishing
 
-Published URL: https://syudu41.github.io/FL-survey/
+Live URL: https://syudu41.github.io/FL-survey/
 
-The workflow in `.github/workflows/pages.yml` builds and publishes `website/site/` when website files change on `main`. It can also be run manually from GitHub Actions. GitHub Pages uses GitHub Actions as its publishing source.
+The workflow in `.github/workflows/pages.yml` builds and publishes the site when website files change on `main`. It can also run manually from GitHub Actions.
 
 ```sh
 website/.venv/bin/mkdocs build --strict -f website/mkdocs.yml
 ```
 
-The generated static website is in `website/site/`. Relative asset paths support the GitHub Pages repository subpath. The generated `site/` folder and local virtual environment are ignored; GitHub Actions builds from the source files.
-
-## Implementation
-
-The custom MkDocs theme lives in `theme/main.html`. Styles and interactions live in `docs/assets/`. The cylinder uses CSS surfaces rather than a WebGL dependency. Feature transitions, staggered concept reveals, and the concept reader run in the browser. Native buttons and dialogs provide keyboard interaction; reduced-motion preferences disable animation. Typography uses Arial with Helvetica Neue, Helvetica, and sans-serif fallbacks; no fonts are downloaded.
-
-The repository-root `index.html` redirects directly to `website/site/index.html` after a local build. On GitHub Pages, publish the built MkDocs output as described above; its own index is the website entry point.
+The generated website is in `website/site/`, which is ignored by Git. The repository-root `index.html` redirects to this folder for local use after building. GitHub Pages publishes the built output directly, so the public homepage opens without this local redirect.

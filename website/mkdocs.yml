@@ -1,7 +1,7 @@
 site_name: FL / Fieldnotes
 site_author: Sudarshan
 site_url: https://syudu41.github.io/FL-survey/
-site_description: An interactive atlas of federated learning — visual prototype
+site_description: A comprehensive federated learning survey with visual navigation, concept notes, and paper references.
 docs_dir: docs
 site_dir: site
 theme:
@@ -10,6 +10,4 @@ theme:
 markdown_extensions:
   - attr_list
   - tables
-nav:
-  - Atlas: index.md
 use_directory_urls: false
