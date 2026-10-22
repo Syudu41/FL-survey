@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{ 'assets/atlas.css' | url }}">
 </head>
 <body>
-  <header class="masthead"><a class="brand" href="{{ 'index.html' | url }}"><span class="brand-symbol">◉</span> FL <span class="brand-slash">/</span> FIELDNOTES</a><span class="edition">FEDERATED LEARNING SURVEY</span><a class="home-link" href="{{ 'index.html' | url }}">Home ↗</a></header>
+  <header class="masthead"><a class="brand" href="{{ 'index.html' | url }}">Federated Learning</a></header>
   {% if page.meta.layout == 'home' %}
   <main class="home">
     <section class="home-copy">
@@ -24,10 +24,15 @@
     <section class="object-area" aria-label="Choose a federated learning dimension">
       <div class="object-heading"><span class="eyebrow">THE DIMENSIONS OF FL</span><span>01 — 05</span></div>
       <div class="orbit"></div><div class="cylinder" id="cylinder"></div><div class="object-base"></div>
+      <section class="concept-popover" id="concept-popover" aria-labelledby="concept-heading" hidden>
+        <div class="popover-heading"><h2 id="concept-heading"></h2><button id="close-concepts" aria-label="Close concept list">×</button></div>
+        <nav id="concept-links" aria-label="Concepts"></nav>
+      </section>
       <p class="object-caption">Select a layer to explore its dimension</p>
     </section>
   </main>
   <div id="markdown-source" hidden>{{ page.content }}</div>
+  <div id="concept-source" hidden>{% for slug, concepts in config.extra.dimension_concepts.items() %}<section data-dimension="{{ slug }}">{% for concept in concepts %}<a href="{{ concept.url | url }}">{{ concept.title }}</a>{% endfor %}</section>{% endfor %}</div>
   <noscript><style>#markdown-source{display:block!important;padding:2rem}.home{display:none}</style></noscript>
   <script src="{{ 'assets/atlas.js' | url }}" defer></script>
   {% else %}

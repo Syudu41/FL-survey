@@ -1,6 +1,6 @@
 # FL Fieldnotes — survey website
 
-A MkDocs website for a comprehensive federated learning survey. The homepage explains the project beside an interactive cylinder. Selecting a dimension shows its description and an **Explore all** link. That link opens a concept listing; every concept has its own detail page and URL.
+A MkDocs website for a comprehensive federated learning survey. The homepage explains the project beside an interactive cylinder. Selecting a dimension shows its description and swings out a panel of concept names linking directly to detail pages. An **Explore all** link also opens the full listing. That link opens a concept listing; every concept has its own detail page and URL.
 
 Concept details are still placeholder text. The homepage and dimension descriptions explain the intended scope.
 
@@ -24,7 +24,7 @@ Open the URL printed by MkDocs, normally http://127.0.0.1:8000.
 
 Front matter selects the page layout: `home`, `dimension`, or `concept`. Concept front matter specifies `dimension` and `dimension_url` for breadcrumb navigation. MkDocs converts all Markdown links to HTML links. Concept pages work without JavaScript; only the cylinder needs JavaScript.
 
-The template is `theme/main.html`. Styles and cylinder interactions are in `docs/assets/`. Fonts use Arial with Helvetica Neue and Helvetica fallbacks. The cylinder is drawn in CSS, with keyboard-accessible buttons and reduced-motion support.
+The build hook `hooks.py` reads the concept links from dimension listing Markdown and supplies the homepage panels, so names and destinations have one source. The template is `theme/main.html`. Styles and cylinder interactions are in `docs/assets/`. Fonts use Arial with Helvetica Neue and Helvetica fallbacks. The cylinder is drawn in CSS, with keyboard-accessible buttons and reduced-motion support.
 
 ## Publishing
 

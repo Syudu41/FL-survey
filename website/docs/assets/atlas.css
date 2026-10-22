@@ -3,3 +3,17 @@
 @media(max-width:1350px){footer{margin:0 6%}.home{gap:6%}.layer{height:78px}}
 @media(max-width:760px){.masthead{height:76px}.edition{display:none}.home{grid-template-columns:1fr;padding:36px 6%;gap:30px}.home-copy{display:contents}.home-copy>.eyebrow{order:0}.intro{order:1}.intro h1{font-size:36px;margin-top:0}.intro p{font-size:14px}.object-area{order:2;height:470px;margin-top:5px}.feature-panel{order:3;max-width:none;margin-top:0;min-height:0}.cylinder{width:290px}.layer{height:65px;padding-left:23px;padding-right:23px}.layer:before{height:30px}.layer-name{font-size:12px}.object-base{width:250px;bottom:55px}.object-heading{padding-bottom:12px}.object-caption{font-size:10px}.document-page{padding:28px 6% 50px}.document-page article h1{font-size:34px}.document-page article{font-size:15px}.breadcrumbs{margin-bottom:32px}footer{margin:15px 6% 0;padding:22px 0;gap:8px}.brand{font-size:11px;gap:8px}.home-link{font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Concept names swing out beside the selected cylinder layer. */
+.masthead .brand{font-size:19px;font-weight:500;letter-spacing:-.3px}
+.cylinder{transition:transform .65s var(--ease),width .65s var(--ease)}
+.object-area.expanded .cylinder{width:260px;transform:translateX(-105px) rotate(-8deg);animation:none}
+.object-area.expanded .layer{padding-left:18px;padding-right:18px}
+.object-area.expanded .layer-name{font-size:12px}
+.concept-popover{position:absolute;z-index:4;right:0;top:155px;width:220px;padding:20px;background:#fbfbfa;border:1px solid var(--line);border-radius:6px;box-shadow:0 20px 50px #26345112;transform-origin:left center}
+.concept-popover[hidden]{display:none}
+.popover-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:4px}
+.popover-heading h2{font-size:13px;font-weight:500;margin:0}
+#close-concepts{border:0;background:none;font-size:22px;color:var(--muted);padding:0 3px}
+#concept-links{display:grid}#concept-links a{display:block;padding:17px 0;font-size:14px;text-decoration:none;border-bottom:1px solid var(--line);line-height:1.4}#concept-links a:last-child{border-bottom:0}#concept-links a:hover{text-decoration:underline}
+@media(max-width:1100px) and (min-width:761px){.concept-popover{width:190px;padding:15px}.object-area.expanded .cylinder{width:220px;transform:translateX(-100px) rotate(-8deg)}.object-area.expanded .layer-name{font-size:10px}}
+@media(max-width:760px){.object-area{transition:height .5s var(--ease)}.object-area.expanded{height:650px}.object-area.expanded .cylinder{position:absolute;top:85px;width:290px;transform:rotate(-8deg)}.concept-popover{top:auto;bottom:30px;right:0;width:100%;padding:15px 20px}.object-area.expanded .object-caption{bottom:0}.object-area.expanded .object-base{top:390px;bottom:auto}.object-area.expanded .layer-name{font-size:12px}#concept-links{grid-template-columns:1fr 1fr;gap:16px}#concept-links a{font-size:13px;border:0;padding:14px 0}.masthead .brand{font-size:18px}}

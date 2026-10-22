@@ -1,4 +1,4 @@
-site_name: FL / Fieldnotes
+site_name: Federated Learning
 site_author: Sudarshan
 site_url: https://syudu41.github.io/FL-survey/
 site_description: A comprehensive federated learning survey with visual navigation, concept notes, and paper references.
@@ -11,3 +11,5 @@ markdown_extensions:
   - attr_list
   - tables
 use_directory_urls: false
+hooks:
+  - hooks.py
