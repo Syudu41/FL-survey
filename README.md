@@ -27,4 +27,4 @@ The [ref-papers](ref-papers/) folder contains downloaded reading copies. Its [re
 
 ## Current status
 
-Research planning and reference collection are underway. The website and simulator have not yet been implemented.
+Research planning and reference collection are underway. A Markdown-based visual prototype is available in [website/](website/README.md), built with MkDocs and a custom interactive cylinder interface. It uses placeholder text while the survey content is developed. The simulator has not yet been implemented.

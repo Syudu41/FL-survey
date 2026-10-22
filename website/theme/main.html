@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ config.site_description }}">
+  <title>{{ config.site_name }}</title>
+  <link rel="stylesheet" href="{{ 'assets/atlas.css' | url }}">
+</head>
+<body>
+  <header class="masthead"><a class="brand" href="{{ 'index.html' | url }}"><span class="brand-symbol">◉</span> FL <span class="brand-slash">/</span> FIELDNOTES</a><span class="edition">RESEARCH ATLAS <i></i> PROTOTYPE 01</span><a class="about-link" href="#about">About the atlas ↗</a></header>
+  <main id="atlas">
+    <section class="intro"><div class="eyebrow"><span></span> A COMPREHENSIVE FL SURVEY · IN PROGRESS</div><h1>One field.<br>Many dimensions.</h1><p>Unfold the layers of federated learning.<br>Choose a dimension. Follow an idea.</p></section>
+    <section class="explorer" aria-label="Interactive federated learning atlas">
+      <div class="object-area"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="axis-label">THE FEDERATED LEARNING STACK</span><div id="cylinder" class="cylinder" aria-label="Choose a dimension"></div><div class="object-base"></div><div class="object-caption"><span class="tiny-cross">+</span> SELECT A LAYER TO UNFOLD <span class="tiny-cross">+</span></div></div>
+      <div class="feature-panel" id="feature-panel"><div class="panel-top"><span class="eyebrow" id="dimension-number"></span><span class="panel-mark">↗</span></div><h2 id="feature-title"></h2><div id="feature-description"></div><div class="concept-label">EXPLORE THE CONCEPTS <span id="concept-count"></span></div><div id="concepts"></div><div class="panel-foot"><span class="status-dot"></span> Illustrative content · Markdown powered</div></div>
+    </section>
+    <footer id="about"><span>A living source bank for federated learning.</span><span class="placeholder-note">LOREM IPSUM DEMO — NO RESEARCH CLAIMS</span><small class="site-credit">Created by {{ config.site_author }}. Built with MkDocs, HTML, CSS, and JavaScript.</small></footer>
+  </main>
+  <dialog id="reader" aria-labelledby="reader-title"><div class="reader-shell"><div class="reader-toolbar"><span id="reader-breadcrumb"></span><button class="close-reader" aria-label="Close concept">✕</button></div><div class="reader-body"><span class="eyebrow">CONCEPT FIELDNOTE</span><h2 id="reader-title"></h2><div id="step-tabs" aria-label="Reading sections"></div><div id="step-content" aria-live="polite"></div></div><div class="reader-bottom"><span id="step-counter"></span><div><button id="previous">← Previous</button><button id="next">Next section →</button></div></div></div></dialog>
+  <div id="markdown-source" hidden>{{ page.content }}</div>
+  <noscript><style>#markdown-source{display:block!important;padding:2rem}#atlas{display:none}</style><p>Enable JavaScript for the interactive atlas. The Markdown content is available below.</p></noscript>
+  <script src="{{ 'assets/atlas.js' | url }}" defer></script>
+</body>
+</html>
