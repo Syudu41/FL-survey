@@ -2,7 +2,7 @@
 
 A website for a comprehensive FL survey: visual concept navigation, research notes, paper summaries, and source references supporting PhD research in FL, secure FL, and applications.
 
-> [!SUCCESS]
+> [!TIP]
 > Work by Sudarshan Balaji 
 
 > [!IMPORTANT]
