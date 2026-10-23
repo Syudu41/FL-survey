@@ -10,7 +10,7 @@ A website for a comprehensive FL survey: visual concept navigation, research not
 
 **[Visit the website](https://syudu41.github.io/FL-survey/)** · [Website guide](website/README.md) · [Reference papers](ref-papers/README.md)
 
-The MkDocs prototype uses placeholder concept notes. A simulator for comparing aggregation methods is planned.
+The MkDocs prototype includes a sourced FL introduction and introductory FedAvg note with LaTeX equations; other concept notes remain placeholders. A simulator for comparing aggregation methods is planned.
 
 ## Content workflow
 

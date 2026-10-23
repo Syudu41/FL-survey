@@ -6,6 +6,10 @@
   <meta name="description" content="{{ config.site_description }}">
   <title>{% if page.title %}{{ page.title }} · {% endif %}{{ config.site_name }}</title>
   <link rel="stylesheet" href="{{ 'assets/atlas.css' | url }}">
+  {% if page.meta.math or 'class="arithmatex"' in page.content %}
+  <script src="{{ 'assets/math-config.js' | url }}" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js" defer></script>
+  {% endif %}
 </head>
 <body>
   <header class="masthead"><a class="brand" href="{{ 'index.html' | url }}">Federated Learning</a></header>
@@ -27,6 +31,10 @@
       <p class="object-caption">Select a layer to explore its dimension</p>
     </section>
   </main>
+  <section class="home-about" aria-labelledby="about-heading">
+    <div><span class="eyebrow">START HERE</span><h2 id="about-heading">{{ page.meta.about_title }}</h2><p>{{ page.meta.about_summary }}</p></div>
+    <a class="explore-button" href="{{ 'about.html' | url }}">Read the introduction <span aria-hidden="true">↗</span></a>
+  </section>
   <dialog id="dimension-view" aria-labelledby="concept-heading">
     <header class="dimension-toolbar"><button id="close-concepts">← All dimensions</button><h2 id="concept-heading"></h2><span>Federated Learning</span></header>
     <div class="dimension-content">
@@ -50,11 +58,11 @@
   {% else %}
   <main class="document-page {% if page.meta.layout == 'dimension' %}concept-list{% endif %}">
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="{{ 'index.html' | url }}">Home</a><span>/</span>{% if page.meta.dimension %}<a href="{{ page.meta.dimension_url | url }}">{{ page.meta.dimension }}</a><span>/</span>{% endif %}<span aria-current="page">{{ page.title }}</span></nav>
-    <div class="eyebrow">{% if page.meta.layout == 'dimension' %}EXPLORE THE CONCEPTS{% else %}CONCEPT NOTES{% endif %}</div>
+    <div class="eyebrow">{% if page.meta.layout == 'dimension' %}EXPLORE THE CONCEPTS{% elif page.meta.layout == 'about' %}INTRODUCTION{% else %}CONCEPT NOTES{% endif %}</div>
     <article>{{ page.content }}</article>
     <a class="back-link" href="{% if page.meta.dimension_url %}{{ page.meta.dimension_url | url }}{% else %}{{ 'index.html' | url }}{% endif %}">← {% if page.meta.dimension %}All {{ page.meta.dimension | lower }} concepts{% else %}Back to the dimensions{% endif %}</a>
   </main>
   {% endif %}
-  <footer><span>Created by {{ config.site_author }}. Built with MkDocs, HTML, CSS, and JavaScript.</span><span>Prototype · Concept notes contain placeholder text.</span></footer>
+  <footer><span>Created by {{ config.site_author }}. Built with MkDocs, HTML, CSS, and JavaScript.</span><span>Research prototype · Introductory notes and draft content.</span></footer>
 </body>
 </html>

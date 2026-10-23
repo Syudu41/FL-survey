@@ -2,7 +2,7 @@
 
 A MkDocs website for a comprehensive federated learning survey. Selecting a dimension magnifies its layer into a cylinder showing up to five clickable concept names. With more than five concepts, arrow controls rotate the horizontal 3D ring by one face, looping through all names. A wireframe border outlines the cylinder. All dimensions or Escape returns to the stack. Explore all opens the generated full listing.
 
-Concept details are still placeholder text. The homepage and dimension descriptions explain the intended scope.
+The FL introduction and FedAvg page contain introductory, sourced content. Other concept pages remain placeholders. FedAvg includes a full-participation averaging equation and an arithmetic example; it is not yet a complete literature review or experiment.
 
 ## Run locally
 
@@ -39,6 +39,18 @@ Optional YAML front matter supports `title`, `description`, and numeric `order`.
 - All other `.md` files in that dimension, including nested files, are discovered as concepts.
 
 `hooks.py` discovers documents and supplies both navigation views. `theme/main.html` controls the page structure. Styles and interactions are in `docs/assets/`. Fonts use Arial with Helvetica Neue and Helvetica fallbacks. The cylinder is drawn in CSS; keyboard arrows and reduced-motion preferences are supported.
+
+## Mathematics
+
+LaTeX math is preserved by `pymdownx.arithmatex` and rendered by MathJax 3.2.2. Use `$w_t$` for inline notation and a separate `$$` block for an equation:
+
+```text
+$$
+w_{t+1} = \sum_{k=1}^{K} \frac{n_k}{n} w_{t+1}^{(k)}
+$$
+```
+
+MathJax loads automatically on pages containing math (or with `math: true` in front matter). The renderer is loaded from jsDelivr, so rendered equations require a network connection. Markdown content stays local. After a requirements change, reinstall with `website/.venv/bin/pip install -r website/requirements.txt` from the repository root.
 
 ## Publishing
 

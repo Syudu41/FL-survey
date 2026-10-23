@@ -1,5 +1,7 @@
 ---
 layout: home
+about_title: What is federated learning?
+about_summary: Start with the participants, the training round, and why keeping raw data local does not by itself guarantee privacy.
 ---
 
 # A comprehensive survey of federated learning.

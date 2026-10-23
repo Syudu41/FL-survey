@@ -10,6 +10,8 @@ theme:
 markdown_extensions:
   - attr_list
   - tables
+  - pymdownx.arithmatex:
+      generic: true
 use_directory_urls: false
 hooks:
   - hooks.py

@@ -1,13 +1,13 @@
 # Website status and architecture
 
-Updated: **2026-10-23**. Source reviewed at commit **`136a77f`** (`Restyle homepage cylinder with illuminated glass layers`). This is a session handoff snapshot; check the working tree and latest commits before continuing.
+Updated: **2026-10-23**. Source reviewed from base commit **`136a77f`** and updated for the introductory FedAvg, mathematics, and FL introduction implementation. This is a session handoff snapshot; check the working tree and latest commits before continuing.
 
 ## Purpose and priorities
 
 Sudarshan Balaji's PhD resource bank for a comprehensive survey of Federated Learning, secure FL, and applications. The website connects visual navigation, concept explanations, and research sources. It will be shown to the advisor, so presentation quality matters.
 
 - Immediate research focus: understand aggregation methods thoroughly, beginning with FedAvg. Cover intuition, equations, examples, assumptions, limitations, and original sources before advancing.
-- Current product: a published visual prototype with placeholder concept notes.
+- Current product: a visual prototype with a sourced FL introduction and introductory FedAvg note; other concept notes remain placeholders.
 - Long-term plan: a reproducible simulator with selectable methods, datasets, client counts, and training settings. **No simulator or model training is implemented.**
 - Communication preference: concise responses unless detail is requested.
 
@@ -23,7 +23,7 @@ Sudarshan Balaji's PhD resource bank for a comprehensive survey of Federated Lea
 | Generated output | `website/site/` — ignored by Git |
 | Deployment workflow | `.github/workflows/pages.yml` |
 
-The latest redesign was deployed and its public homepage verified in the previous session on 2026-10-22. This documentation update inspected local sources; it did not recheck the live deployment.
+The previous glass-layer redesign was deployed and verified on 2026-10-22. The 2026-10-23 update adds the matching light backdrop, math rendering, FedAvg note, and FL introduction; check the latest GitHub Actions run for its release status.
 
 GitHub Actions builds and deploys on pushes to `main` affecting `website/**` or the workflow file. It also supports manual dispatch. Changes only to this root status file do not trigger deployment. The workflow installs Python 3.12 and the requirements, runs a strict MkDocs build, uploads `website/site/`, and deploys to the `github-pages` environment.
 
@@ -34,7 +34,8 @@ The repository-root `index.html` redirects to `website/site/index.html` for loca
 1. **Homepage:** project introduction on the left; a cylinder of selectable dimensions on the right. Header reads only **Federated Learning**. Footer credits Sudarshan and MkDocs/HTML/CSS/JavaScript.
 2. **Dimension click:** updates its description and Explore all destination, then magnifies the layer into a full-screen native HTML dialog.
 3. **Concept carousel:** names arranged horizontally around an outlined 3D cylinder. Up to five are visible; additional concepts enable Previous/Next and keyboard arrows. Navigation loops through the concepts. A name opens its detail page. All dimensions or Escape closes the dialog.
-4. **Explore all:** opens a separate dimension page listing all concepts with brief descriptions. Each entry opens a separate detail page with breadcrumbs.
+4. **Introduction:** a section below the homepage cylinder links to `about.html`, covering participants, a training round, and privacy limitations with sources.
+5. **Explore all:** opens a separate dimension page listing all concepts with brief descriptions. Each entry opens a separate detail page with breadcrumbs.
 
 There is deliberately **no “5 visible · 6 concepts” label**. Do not restore it. Smaller dimensions display their available names and disable the rotation arrows.
 
@@ -46,11 +47,11 @@ There is deliberately **no “5 visible · 6 concepts” label**. Do not restore
 | `privacy` | Differential privacy; Secure aggregation |
 | `security` | Poisoning; Threat models |
 
-The added aggregation documents demonstrate overflow navigation. Their presence does not mean the methods have been studied or their summaries completed. Concept pages still contain lorem ipsum and explicit placeholder notices.
+The added aggregation documents demonstrate overflow navigation. Their presence does not mean the methods have been studied or their summaries completed. All concept pages except FedAvg still contain placeholder notes. FedAvg now includes a sourced introductory explanation, full-participation equation, symbol table, and worked arithmetic example; it is not a completed survey or reproduction.
 
 ## Architecture
 
-**Static MkDocs 1.6.1 + custom Jinja theme + plain CSS and JavaScript.** No backend, database, accounts, React, Three.js, WebGL, or runtime Markdown fetch is used. Fonts are Arial, with Helvetica Neue/Helvetica/sans-serif fallbacks. Rendering and animation run in the browser.
+**Static MkDocs 1.6.1 + custom Jinja theme + plain CSS and JavaScript + Arithmatex/MathJax for equations.** No backend, database, accounts, React, Three.js, WebGL, or runtime Markdown fetch is used. Fonts are Arial, with Helvetica Neue/Helvetica/sans-serif fallbacks. Rendering and animation run in the browser.
 
 ```text
 Markdown files + optional YAML metadata
@@ -70,6 +71,8 @@ GitHub Pages → browser cylinder and concept navigation
 
 | File/path | Responsibility |
 | --- | --- |
+| `website/docs/about.md` | Sourced introduction to FL |
+| `website/docs/assets/math-config.js` | MathJax configuration for normalized Arithmatex delimiters |
 | `website/docs/index.md` | Homepage introduction; dimension headings, descriptions, IDs, and listing links |
 | `website/docs/dimensions/<slug>/index.md` | Dimension introduction; concept list appended during build |
 | Other `.md` files below that dimension | Concept content, including nested documents and READMEs |
@@ -77,7 +80,7 @@ GitHub Pages → browser cylinder and concept navigation
 | `website/theme/main.html` | Shared shell; home, dimension, and concept layouts; full-screen carousel dialog |
 | `website/docs/assets/atlas.js` | Homepage dimension parsing, layer buttons, zoom, carousel rotation, keyboard handling |
 | `website/docs/assets/atlas.css` | Responsive layouts; homepage glass layers; carousel faces and cylinder outline |
-| `website/requirements.txt` | Pins `mkdocs==1.6.1`; transitive packages are not separately pinned |
+| `website/requirements.txt` | Pins `mkdocs==1.6.1` and `pymdown-extensions==10.16.1`; transitive packages are not separately pinned |
 | `website/assets/workflow.svg` | Workflow image embedded in the root README; outside the MkDocs content directory |
 | `website/preview-desktop.png` | Saved preview image, not a runtime dependency |
 | `ref-papers/` | Local paper library and reference index; outside the generated website |
@@ -162,14 +165,19 @@ git push origin main
 
 Pushing, not committing alone, triggers deployment. Check the GitHub Actions result before calling a change live. Do not edit generated files. Do not depend on `/tmp` environments, browser scripts, or previous session processes surviving.
 
-## Open design issue — next work
+## Research direction and remaining design work
 
-**The latest homepage design is not accepted as finished.** The user identified a mismatch between its background and cylinder. The agreed assessment was that the dark rectangular panel feels pasted onto the light page and the object still resembles thin floating discs rather than a substantial glass structure. This was acknowledged but has not been fixed.
+The priority is now real survey content. A proposed progression is a short overview of every dimension, followed by a detailed aggregation study beginning with FedAvg. This is a recommendation for discussion, not approval to populate all dimensions with unreviewed summaries. The initial FedAvg equation assumes full participation; sampling/dropout and their weighting convention need separate treatment.
 
-- Selected homepage reference: [Database Loading by Reijo](https://dribbble.com/shots/26897580-Database-Loading). Its inspected preview is a luminous glass-block composition, not a literal cylinder. Earlier recommendations incorrectly described it as a cylinder. The current homepage only approximates its glass edges and internal light.
-- The next redesign needs a coherent scene, geometry, and lighting. Do not describe the current approximation as a faithful reproduction or a completed redesign.
-- The separately selected concept-carousel reference is [David DeSandro's horizontal carousel](https://3dtransforms.desandro.com/carousel). Preserve the horizontal arrangement, outer cylinder outline, clickable names, and automatic content discovery. Earlier vertical lists and side pop-up panels were explicitly rejected.
-- Other established preferences: no green theme; simple Arial/system typography; no extra middle header title, Home header link, or “About the atlas” link; concise interface copy.
+The user requested removal of the black cylinder backdrop. It now matches the light page background, and layer text/edges have been recolored for contrast. The broader question of the cylinder's visual quality is not declared finished.
+
+- Homepage visual reference: [Database Loading by Reijo](https://dribbble.com/shots/26897580-Database-Loading). Its inspected preview is a luminous glass-block composition, not a literal cylinder. The current CSS layers are an adaptation, not a reproduction.
+- Concept-carousel reference: [David DeSandro's horizontal carousel](https://3dtransforms.desandro.com/carousel). Preserve horizontal arrangement, the outer cylinder outline, clickable names, automatic discovery, and the absence of a concept-count label. Earlier vertical lists and side pop-up panels were rejected.
+- Other preferences: no green theme; Arial/system typography; no extra middle header title, Home header link, or “About the atlas” link; concise interface copy.
+
+### Writing equations
+
+Use `$...$` inline and a separate `$$...$$` block in Markdown. `pymdownx.arithmatex` preserves the notation; MathJax 3.2.2 renders SVG math in the browser. The theme loads it automatically for rendered math or `math: true` metadata. The JavaScript renderer comes from jsDelivr, so typeset equations currently require network access. This is math notation support, not a server-side LaTeX compiler.
 
 ## Limitations and validation
 
@@ -177,9 +185,9 @@ Pushing, not committing alone, triggers deployment. Check the GitHub Actions res
 - Metadata parsing is intentionally simple, not a full semantic Markdown parser. Complex formatting may need explicit `title`/`description` values.
 - Content is trusted repository Markdown rendered as HTML. There is no upload/editor API or untrusted-content sanitization pipeline.
 - Source attribution is an intended editorial practice, not an automated claim-to-paper database. Local PDFs are not automatically copied into the website. Four PDFs are currently present; the Mahmud survey has a recorded source link but its download failed. See `ref-papers/README.md`.
-- The only configured Markdown extensions are `attr_list` and `tables`. No dedicated equation renderer or bibliography engine is configured yet.
+- Configured extensions: `attr_list`, `tables`, and `pymdownx.arithmatex` in generic mode. A bibliography engine and automated claim-to-paper database are not implemented.
 - Previous sessions passed strict MkDocs builds and ad hoc Chrome checks covering selections, horizontal rotation/looping, links, mobile bounds, and reduced motion. Automatic root/nested README discovery was also checked. There is no committed browser test suite. Those checks establish operation, not advisor-ready visual quality.
-- No new build/browser checks were run for this documentation-only update. At inspection, the working tree was clean.
+- The 2026-10-23 update passed a strict MkDocs build and Chrome checks for matching backgrounds, the below-cylinder introduction, introduction-to-FedAvg links, two display equations and multiple inline equations rendered to SVG, absence of math errors, and mobile overflow. These are ad hoc checks, not a committed test suite.
 
 ## Start a future session
 
